@@ -1,5 +1,6 @@
 package com.campuslands.Mi_Red_Social.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -32,18 +33,23 @@ public class UserEntity {
     private Date birthday;
 
     @OneToMany(mappedBy = "user_sender")
+    @JsonIgnore
     private List<MessageEntity> sentMessages;
 
     @OneToMany(mappedBy = "user_receiver")
+    @JsonIgnore
     private List<MessageEntity> receivedMessages;
 
     @OneToMany(mappedBy = "user_follower")
+    @JsonIgnore
     private List<FollowersEntity> usersFollowers;
 
     @OneToMany(mappedBy = "user_following")
+    @JsonIgnore
     private List<FollowersEntity> usersFollowing;
 
     @OneToMany(mappedBy = "user_posts")
+    @JsonIgnore
     private List<PostsEntity> userPosts;
 
     @OneToMany(mappedBy = "user_comments")
@@ -53,6 +59,7 @@ public class UserEntity {
     private List<LikesEntity> userLikes;
 
     @OneToMany(mappedBy = "user_notifications")
+    @JsonIgnore
     private List<NotificationEntity> notifications;
 
     public UserEntity(){}
