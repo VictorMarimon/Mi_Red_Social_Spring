@@ -1,8 +1,6 @@
 package com.campuslands.Mi_Red_Social.entities;
 
 import jakarta.persistence.*;
-
-import java.sql.Time;
 import java.sql.Timestamp;
 
 @Entity
