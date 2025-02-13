@@ -1,5 +1,6 @@
 package com.campuslands.Mi_Red_Social.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class TypeNotificationEntity {
     private String type;
 
     @OneToMany(mappedBy = "type_notification")
+    @JsonIgnore
     private List<NotificationEntity> notifications;
 
     public TypeNotificationEntity(){}
