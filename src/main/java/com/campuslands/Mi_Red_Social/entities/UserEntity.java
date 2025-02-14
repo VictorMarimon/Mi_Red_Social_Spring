@@ -53,9 +53,11 @@ public class UserEntity {
     private List<PostsEntity> userPosts;
 
     @OneToMany(mappedBy = "user_comments")
+    @JsonIgnore
     private List<CommentsEntity> userComments;
 
     @OneToMany(mappedBy = "user_likes")
+    @JsonIgnore
     private List<LikesEntity> userLikes;
 
     @OneToMany(mappedBy = "user_notifications")

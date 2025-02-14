@@ -1,5 +1,6 @@
 package com.campuslands.Mi_Red_Social.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -17,15 +18,19 @@ public class PostsEntity {
     private Timestamp created_at;
 
     @OneToMany(mappedBy = "post_comments")
+    @JsonIgnore
     private List<CommentsEntity> postComments;
 
     @OneToMany(mappedBy = "post_likes")
+    @JsonIgnore
     private List<LikesEntity> postLikes;
 
     @OneToMany(mappedBy = "post_tags")
+    @JsonIgnore
     private List<TagsEntity> postTags;
 
     @OneToMany(mappedBy = "post_images")
+    @JsonIgnore
     private List<ImagesEntity> postImages;
 
     @ManyToOne
