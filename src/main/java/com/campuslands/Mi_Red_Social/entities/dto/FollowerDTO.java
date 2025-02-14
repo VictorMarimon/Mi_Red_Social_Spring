@@ -1,4 +1,4 @@
-package com.campuslands.Mi_Red_Social.dto;
+package com.campuslands.Mi_Red_Social.entities.dto;
 
 import java.sql.Timestamp;
 

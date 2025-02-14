@@ -1,6 +1,6 @@
 package com.campuslands.Mi_Red_Social.services;
 
-import com.campuslands.Mi_Red_Social.dto.PostsDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.PostsDTO;
 import com.campuslands.Mi_Red_Social.entities.PostsEntity;
 import com.campuslands.Mi_Red_Social.entities.UserEntity;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;

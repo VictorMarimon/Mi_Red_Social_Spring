@@ -1,6 +1,6 @@
 package com.campuslands.Mi_Red_Social.controllers;
 
-import com.campuslands.Mi_Red_Social.dto.NotificationDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.NotificationDTO;
 import com.campuslands.Mi_Red_Social.entities.NotificationEntity;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;

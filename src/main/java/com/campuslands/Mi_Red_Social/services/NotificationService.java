@@ -1,6 +1,6 @@
 package com.campuslands.Mi_Red_Social.services;
 
-import com.campuslands.Mi_Red_Social.dto.NotificationDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.NotificationDTO;
 import com.campuslands.Mi_Red_Social.entities.NotificationEntity;
 import com.campuslands.Mi_Red_Social.entities.TypeNotificationEntity;
 import com.campuslands.Mi_Red_Social.entities.UserEntity;

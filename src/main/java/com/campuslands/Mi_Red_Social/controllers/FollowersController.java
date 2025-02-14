@@ -1,6 +1,6 @@
 package com.campuslands.Mi_Red_Social.controllers;
 
-import com.campuslands.Mi_Red_Social.dto.FollowerDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.FollowerDTO;
 import com.campuslands.Mi_Red_Social.entities.FollowersEntity;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;
