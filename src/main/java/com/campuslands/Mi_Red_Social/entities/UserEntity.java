@@ -1,21 +1,26 @@
 package com.campuslands.Mi_Red_Social.entities;
 
+import com.campuslands.Mi_Red_Social.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
     @Column(name = "email")
     private String email;
@@ -23,14 +28,16 @@ public class UserEntity {
     private String phone;
     @Column(name = "password")
     private String password;
-    @Column(name = "briography")
+    @Column(name = "biography")
     private String biography;
     @Column(name = "photo_profile")
     private String photo_profile;
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Date created_at;
     @Column(name = "birthday")
     private Date birthday;
+    @Column(name = "role")
+    private Role rol;
 
     @OneToMany(mappedBy = "user_sender")
     @JsonIgnore
@@ -66,7 +73,7 @@ public class UserEntity {
 
     public UserEntity(){}
 
-    public UserEntity(Integer id, String name, String username, String email, String phone, String password, String biography, String photo_profile, Timestamp created_at, Date birthday, List<MessageEntity> sentMessages, List<MessageEntity> receivedMessages, List<FollowersEntity> usersFollowers, List<FollowersEntity> usersFollowing, List<PostsEntity> userPosts, List<CommentsEntity> userComments, List<LikesEntity> userLikes, List<NotificationEntity> notifications) {
+    public UserEntity(Integer id, String name, String username, String email, String phone, String password, String biography, String photo_profile, Date created_at, Date birthday, Role rol, List<MessageEntity> sentMessages, List<MessageEntity> receivedMessages, List<FollowersEntity> usersFollowers, List<FollowersEntity> usersFollowing, List<PostsEntity> userPosts, List<CommentsEntity> userComments, List<LikesEntity> userLikes, List<NotificationEntity> notifications) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -77,6 +84,7 @@ public class UserEntity {
         this.photo_profile = photo_profile;
         this.created_at = created_at;
         this.birthday = birthday;
+        this.rol = rol;
         this.sentMessages = sentMessages;
         this.receivedMessages = receivedMessages;
         this.usersFollowers = usersFollowers;
@@ -107,6 +115,26 @@ public class UserEntity {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -125,6 +153,11 @@ public class UserEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((rol.name())));
     }
 
     public String getPassword() {
@@ -151,11 +184,11 @@ public class UserEntity {
         this.photo_profile = photo_profile;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
@@ -165,6 +198,14 @@ public class UserEntity {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Role getRol() {
+        return rol;
+    }
+
+    public void setRol(Role rol) {
+        this.rol = rol;
     }
 
     public List<MessageEntity> getSentMessages() {
@@ -244,6 +285,7 @@ public class UserEntity {
                 ", photo_profile='" + photo_profile + '\'' +
                 ", created_at=" + created_at +
                 ", birthday=" + birthday +
+                ", rol=" + rol +
                 ", sentMessages=" + sentMessages +
                 ", receivedMessages=" + receivedMessages +
                 ", usersFollowers=" + usersFollowers +
