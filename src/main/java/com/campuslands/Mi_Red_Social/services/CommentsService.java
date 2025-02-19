@@ -4,11 +4,13 @@ import com.campuslands.Mi_Red_Social.entities.CommentsEntity;
 import com.campuslands.Mi_Red_Social.entities.PostsEntity;
 import com.campuslands.Mi_Red_Social.entities.UserEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.CommentDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.CommentPostDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.repositories.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -52,5 +54,9 @@ public class CommentsService {
 
     public CommentsEntity searchCommentById(Integer id){
         return commentsRepository.findById(id).orElse(null);
+    }
+
+    public List<CommentPostDTO> commentPost(Integer id_post){
+        return commentsRepository.commentPost(id_post);
     }
 }

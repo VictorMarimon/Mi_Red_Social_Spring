@@ -3,12 +3,15 @@ package com.campuslands.Mi_Red_Social.services;
 import com.campuslands.Mi_Red_Social.entities.dto.FollowerDTO;
 import com.campuslands.Mi_Red_Social.entities.FollowersEntity;
 import com.campuslands.Mi_Red_Social.entities.UserEntity;
+import com.campuslands.Mi_Red_Social.entities.dto.FollowersUserDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.FollowsDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.repositories.FollowersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FollowersService {
@@ -42,11 +45,23 @@ public class FollowersService {
         return followersRepository.save(follow);
     }
 
-    public void deleteFollow(FollowersEntity follow){
-        followersRepository.delete(follow);
+    public void deleteFollow(Integer follower, Integer following){
+        followersRepository.deleteFollow(follower, following);
     }
 
     public FollowersEntity findFollowById(Integer id){
         return followersRepository.findById(id).orElse(null);
+    }
+
+    public FollowersUserDTO followers(Integer id){
+        return followersRepository.followers(id);
+    }
+
+    public List<FollowsDTO> userFollowers(Integer id){
+        return followersRepository.userFollowers(id);
+    }
+
+    public List<FollowsDTO> userFollowing(Integer id){
+        return followersRepository.userFollowing(id);
     }
 }

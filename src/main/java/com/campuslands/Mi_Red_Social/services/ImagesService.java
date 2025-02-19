@@ -3,14 +3,18 @@ package com.campuslands.Mi_Red_Social.services;
 import com.campuslands.Mi_Red_Social.entities.ImagesEntity;
 import com.campuslands.Mi_Red_Social.entities.PostsEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.ImageDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.ImagesPostDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.repositories.ImagesRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ImagesService {
     @Autowired
     private ImagesRepository imagesRepository;
@@ -21,20 +25,30 @@ public class ImagesService {
         return imagesRepository.findAll();
     }
 
-    public ImagesEntity addImage(ImageDTO imageDTO){
-        PostsEntity postImage = postsService.searchPostById(imageDTO.getPost_image_id());
-
-        if (postImage == null){
-            throw new ResourceNotFoundException("Post not found with id: " + imageDTO.getPost_image_id());
+    public List<ImagesEntity> addImages(List<ImageDTO> imageDTOs) {
+        if (imageDTOs == null || imageDTOs.isEmpty()) {
+            throw new IllegalArgumentException("No images provided.");
         }
 
-        ImagesEntity image = new ImagesEntity();
+        PostsEntity postImage = postsService.searchPostById(imageDTOs.get(0).getPost_image_id());
 
-        image.setId(imageDTO.getPost_image_id());
-        image.setImage(imageDTO.getImage());
-        image.setPost_images(postImage);
+        if (postImage == null) {
+            throw new ResourceNotFoundException("Post not found with id: " + imageDTOs.get(0).getPost_image_id());
+        }
 
-        return imagesRepository.save(image);
+        List<ImagesEntity> images = imageDTOs.stream().map(dto -> {
+            ImagesEntity image = new ImagesEntity();
+            image.setId(dto.getId());
+            image.setImage(dto.getImage());
+            image.setPost_images(postImage);
+            return image;
+        }).collect(Collectors.toList());
+
+        return imagesRepository.saveAll(images);
+    }
+
+    public List<ImagesPostDTO> imagesPost(Integer id){
+        return imagesRepository.imagesPost(id);
     }
 
     public void deleteImage(ImagesEntity image){

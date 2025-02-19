@@ -5,12 +5,14 @@ import com.campuslands.Mi_Red_Social.entities.PostsEntity;
 import com.campuslands.Mi_Red_Social.entities.TagsEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.ImageDTO;
 import com.campuslands.Mi_Red_Social.entities.dto.TagDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.TagsPostDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService {
@@ -23,21 +25,32 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public TagsEntity addTag(TagDTO tagDTO){
-        PostsEntity postTag = postsService.searchPostById(tagDTO.getPost_tag_id());
-
-        if (postTag == null){
-            throw new ResourceNotFoundException("Post not found with id: " + tagDTO.getPost_tag_id());
+    public List<TagsEntity> addTags(List<TagDTO> tagDTOs) {
+        if (tagDTOs == null || tagDTOs.isEmpty()) {
+            throw new IllegalArgumentException("Tag list cannot be null or empty");
         }
 
-        TagsEntity tag = new TagsEntity();
+        Integer postId = tagDTOs.get(0).getPost_tag_id();
+        PostsEntity postTag = postsService.searchPostById(postId);
 
-        tag.setId(tagDTO.getId());
-        tag.setTag(tagDTO.getTag());
-        tag.setPost_tags(postTag);
+        if (postTag == null) {
+            throw new ResourceNotFoundException("Post not found with id: " + postId);
+        }
 
-        return tagRepository.save(tag);
+        List<TagsEntity> tags = tagDTOs.stream().map(tagDTO -> {
+            TagsEntity tag = new TagsEntity();
+            tag.setId(tagDTO.getId());
+            tag.setTag(tagDTO.getTag());
+            tag.setPost_tags(postTag);
+            return tag;
+        }).collect(Collectors.toList());
+
+        return tagRepository.saveAll(tags);
     }
+
+    public List<TagsPostDTO> tagsPost(Integer id){
+        return tagRepository.tagsPost(id);
+    };
 
     public void deleteTag(TagsEntity tag){
         tagRepository.delete(tag);
