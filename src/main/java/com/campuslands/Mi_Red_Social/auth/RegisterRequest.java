@@ -104,7 +104,7 @@ public class RegisterRequest {
     }
 
     public Role getRol() {
-        return rol;
+        return rol != null ? rol : Role.USER;
     }
 
     public void setRol(Role rol) {
