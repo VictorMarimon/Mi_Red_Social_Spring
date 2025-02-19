@@ -1,7 +1,10 @@
 package com.campuslands.Mi_Red_Social.controllers;
 
 import com.campuslands.Mi_Red_Social.entities.ImagesEntity;
+import com.campuslands.Mi_Red_Social.entities.TagsEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.ImageDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.ImagesPostDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.TagDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;
 import com.campuslands.Mi_Red_Social.services.ImagesService;
@@ -24,15 +27,20 @@ public class ImagesController {
         return ResponseEntity.ok(imagesService.listImages());
     }
 
+    @GetMapping("/image/{id}")
+    public ResponseEntity<List<ImagesPostDTO>> imagesPost(@PathVariable Integer id){
+        return ResponseEntity.ok(imagesService.imagesPost(id));
+    }
+
     @PostMapping("/image")
-    public ResponseEntity<ImagesEntity> addImage(@RequestBody ImageDTO imageDTO){
-        if (imageDTO == null){
-            throw new ResourceWithoutContentException("The image has no content");
+    public ResponseEntity<List<ImagesEntity>> addImages(@RequestBody List<ImageDTO> imageDTOs) {
+        if (imageDTOs == null || imageDTOs.isEmpty()) {
+            throw new ResourceWithoutContentException("No images provided");
         }
 
-        ImagesEntity image = imagesService.addImage(imageDTO);
+        List<ImagesEntity> savedImages = imagesService.addImages(imageDTOs);
 
-        return ResponseEntity.ok(image);
+        return ResponseEntity.ok(savedImages);
     }
 
     @DeleteMapping("/image/{id}")

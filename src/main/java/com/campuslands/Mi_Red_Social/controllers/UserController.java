@@ -1,6 +1,7 @@
 package com.campuslands.Mi_Red_Social.controllers;
 
 import com.campuslands.Mi_Red_Social.entities.UserEntity;
+import com.campuslands.Mi_Red_Social.entities.dto.UserUnfollowDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;
 import com.campuslands.Mi_Red_Social.services.UserService;
@@ -12,6 +13,7 @@ import org.springframework.web.service.annotation.DeleteExchange;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/app")
@@ -24,6 +26,20 @@ public class UserController {
         if (user == null){
             throw new ResourceWithoutContentException("No user information is received");
         }return ResponseEntity.ok(userService.addUser(user));
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<UserEntity> searchUserByUsername(@PathVariable String username){
+        Optional<UserEntity> user = userService.searchUserByUsername(username);
+        if (user.isEmpty()){
+            throw new ResourceNotFoundException("The user does not exist: " +username);
+        }
+        return ResponseEntity.ok(user.get());
+    }
+
+    @GetMapping("/users/follow/{id}")
+    public ResponseEntity<List<UserUnfollowDTO>> usersNotFollowing(@PathVariable Integer id){
+        return ResponseEntity.ok(userService.usersNotFollowing(id));
     }
 
     @GetMapping("/users")

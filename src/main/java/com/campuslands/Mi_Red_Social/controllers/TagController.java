@@ -2,6 +2,7 @@ package com.campuslands.Mi_Red_Social.controllers;
 
 import com.campuslands.Mi_Red_Social.entities.TagsEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.TagDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.TagsPostDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;
 import com.campuslands.Mi_Red_Social.services.TagService;
@@ -24,16 +25,21 @@ public class TagController {
         return ResponseEntity.ok(tagService.listTags());
     }
 
+    @GetMapping("/tag/{id}")
+    public ResponseEntity<List<TagsPostDTO>> tagsPost(@PathVariable Integer id){
+        return ResponseEntity.ok(tagService.tagsPost(id));
+    }
+
     @PostMapping("/tag")
-    public ResponseEntity<TagsEntity> addImage(@RequestBody TagDTO tagDTO){
-        if (tagDTO == null){
-            throw new ResourceWithoutContentException("The tag has no content");
+    public ResponseEntity<List<TagsEntity>> addTags(@RequestBody List<TagDTO> tagDTOs) {
+        if (tagDTOs == null || tagDTOs.isEmpty()) {
+            throw new ResourceWithoutContentException("The tags list has no content");
         }
 
-        TagsEntity tag = tagService.addTag(tagDTO);
-
-        return ResponseEntity.ok(tag);
+        List<TagsEntity> savedTags = tagService.addTags(tagDTOs);
+        return ResponseEntity.ok(savedTags);
     }
+
 
     @DeleteMapping("/tag/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteTag(@PathVariable Integer id){

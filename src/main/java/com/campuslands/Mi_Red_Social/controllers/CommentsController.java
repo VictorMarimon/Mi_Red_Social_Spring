@@ -2,6 +2,7 @@ package com.campuslands.Mi_Red_Social.controllers;
 
 import com.campuslands.Mi_Red_Social.entities.CommentsEntity;
 import com.campuslands.Mi_Red_Social.entities.dto.CommentDTO;
+import com.campuslands.Mi_Red_Social.entities.dto.CommentPostDTO;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceNotFoundException;
 import com.campuslands.Mi_Red_Social.exceptions.ResourceWithoutContentException;
 import com.campuslands.Mi_Red_Social.services.CommentsService;
@@ -22,6 +23,11 @@ public class CommentsController {
     @GetMapping("/comment")
     public ResponseEntity<List<CommentsEntity>> listComments(){
         return ResponseEntity.ok(commentsService.listComments());
+    }
+
+    @GetMapping("/comment/{id_post}")
+    public ResponseEntity<List<CommentPostDTO>> commentPost(@PathVariable Integer id_post){
+        return ResponseEntity.ok(commentsService.commentPost(id_post));
     }
 
     @PostMapping("/comment")
