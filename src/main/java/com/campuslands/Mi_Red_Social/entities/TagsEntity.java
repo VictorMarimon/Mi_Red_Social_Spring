@@ -11,7 +11,7 @@ public class TagsEntity {
     @Column(name = "tag")
     private String tag;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id")
     private PostsEntity post_tags;
 

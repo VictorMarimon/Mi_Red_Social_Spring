@@ -19,7 +19,7 @@ public class LikesEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user_likes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id")
     private PostsEntity post_likes;
 
