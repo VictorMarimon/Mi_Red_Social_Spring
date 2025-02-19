@@ -8,10 +8,10 @@ public class ImagesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "image")
+    @Column(name = "image", length = 20000)
     private String image;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id")
     private PostsEntity post_images;
 

@@ -30,13 +30,14 @@ public class UserEntity implements UserDetails {
     private String password;
     @Column(name = "biography")
     private String biography;
-    @Column(name = "photo_profile")
+    @Column(name = "photo_profile", length = 20000)
     private String photo_profile;
     @Column(name = "created_at")
     private Date created_at;
     @Column(name = "birthday")
     private Date birthday;
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     private Role rol;
 
     @OneToMany(mappedBy = "user_sender")
@@ -70,6 +71,9 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "user_notifications")
     @JsonIgnore
     private List<NotificationEntity> notifications;
+
+    @JsonIgnore
+    private List<GrantedAuthority> authorities;
 
     public UserEntity(){}
 
@@ -201,7 +205,7 @@ public class UserEntity implements UserDetails {
     }
 
     public Role getRol() {
-        return rol;
+        return rol!= null ? rol : Role.USER;
     }
 
     public void setRol(Role rol) {
