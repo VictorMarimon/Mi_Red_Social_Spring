@@ -1,9 +1,8 @@
 package com.campuslands.Mi_Red_Social.entities;
 
 import jakarta.persistence.*;
-import jakarta.websocket.ClientEndpoint;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Entity
 @Table(name = "followers")
@@ -12,7 +11,7 @@ public class FollowersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Date created_at;
 
     @ManyToOne
     @JoinColumn(name = "follower_id")
@@ -24,7 +23,7 @@ public class FollowersEntity {
 
     public FollowersEntity(){}
 
-    public FollowersEntity(Integer id, Timestamp created_at, UserEntity user_follower, UserEntity user_following) {
+    public FollowersEntity(Integer id, Date created_at, UserEntity user_follower, UserEntity user_following) {
         this.id = id;
         this.created_at = created_at;
         this.user_follower = user_follower;
@@ -39,11 +38,11 @@ public class FollowersEntity {
         this.id = id;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 

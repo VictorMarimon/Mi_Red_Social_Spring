@@ -1,17 +1,17 @@
 package com.campuslands.Mi_Red_Social.entities.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class CommentDTO {
     private Integer id;
     private String comment;
-    private Timestamp created_at;
+    private Date created_at;
     private Integer user_comment_id;
     private Integer post_comment_id;
 
     public CommentDTO(){}
 
-    public CommentDTO(Integer id, String comment, Timestamp created_at, Integer user_comment_id, Integer post_comment_id) {
+    public CommentDTO(Integer id, String comment, Date created_at, Integer user_comment_id, Integer post_comment_id) {
         this.id = id;
         this.comment = comment;
         this.created_at = created_at;
@@ -35,11 +35,11 @@ public class CommentDTO {
         this.comment = comment;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 

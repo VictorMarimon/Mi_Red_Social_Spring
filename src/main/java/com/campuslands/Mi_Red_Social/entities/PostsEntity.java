@@ -3,7 +3,8 @@ package com.campuslands.Mi_Red_Social.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,21 +16,21 @@ public class PostsEntity {
     @Column(name = "content")
     private String content;
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Date created_at;
 
-    @OneToMany(mappedBy = "post_comments")
+    @OneToMany(mappedBy = "post_comments", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<CommentsEntity> postComments;
 
-    @OneToMany(mappedBy = "post_likes")
+    @OneToMany(mappedBy = "post_likes", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<LikesEntity> postLikes;
 
-    @OneToMany(mappedBy = "post_tags")
+    @OneToMany(mappedBy = "post_tags", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<TagsEntity> postTags;
 
-    @OneToMany(mappedBy = "post_images")
+    @OneToMany(mappedBy = "post_images", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<ImagesEntity> postImages;
 
@@ -37,9 +38,17 @@ public class PostsEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user_posts;
 
-    public PostsEntity(){}
+    @Version
+    private Long version;
 
-    public PostsEntity(Integer id, String content, Timestamp created_at, List<CommentsEntity> postComments, List<LikesEntity> postLikes, List<TagsEntity> postTags, List<ImagesEntity> postImages, UserEntity user_posts) {
+    public PostsEntity() {
+        this.postComments = new ArrayList<>();
+        this.postLikes = new ArrayList<>();
+        this.postTags = new ArrayList<>();
+        this.postImages = new ArrayList<>();
+    }
+
+    public PostsEntity(Integer id, String content, Date created_at, List<CommentsEntity> postComments, List<LikesEntity> postLikes, List<TagsEntity> postTags, List<ImagesEntity> postImages, UserEntity user_posts) {
         this.id = id;
         this.content = content;
         this.created_at = created_at;
@@ -66,11 +75,11 @@ public class PostsEntity {
         this.content = content;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 

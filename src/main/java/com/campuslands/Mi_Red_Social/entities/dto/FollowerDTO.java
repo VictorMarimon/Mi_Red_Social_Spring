@@ -1,16 +1,16 @@
 package com.campuslands.Mi_Red_Social.entities.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class FollowerDTO {
     private Integer id;
-    private Timestamp created_at;
+    private Date created_at;
     private Integer user_follower_id;
     private Integer user_following_id;
 
     public FollowerDTO(){}
 
-    public FollowerDTO(Integer id, Timestamp created_at, Integer user_follower, Integer user_following) {
+    public FollowerDTO(Integer id, Date created_at, Integer user_follower, Integer user_following) {
         this.id = id;
         this.created_at = created_at;
         this.user_follower_id = user_follower;
@@ -25,11 +25,11 @@ public class FollowerDTO {
         this.id = id;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 

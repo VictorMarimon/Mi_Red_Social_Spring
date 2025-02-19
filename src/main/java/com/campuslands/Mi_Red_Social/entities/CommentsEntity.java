@@ -2,7 +2,7 @@ package com.campuslands.Mi_Red_Social.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Entity
 @Table(name = "comments")
@@ -13,19 +13,19 @@ public class CommentsEntity {
     @Column(name = "comment")
     private String comment;
     @Column(name = "created_at")
-    private Timestamp created_at;
+    private Date created_at;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_comments;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "posts_id")
     private PostsEntity post_comments;
 
     public CommentsEntity(){}
 
-    public CommentsEntity(Integer id, String comment, Timestamp created_at, UserEntity user_comments, PostsEntity post_comments) {
+    public CommentsEntity(Integer id, String comment, Date created_at, UserEntity user_comments, PostsEntity post_comments) {
         this.id = id;
         this.comment = comment;
         this.created_at = created_at;
@@ -49,11 +49,11 @@ public class CommentsEntity {
         this.comment = comment;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
